@@ -14,7 +14,7 @@ class HBNBCCommand(cmd.Cmd):
         return True
 
     def do_EOF(self, line):
-        """Pandles EOF signal"""
+        """Handles EOF signal"""
         return True
 
     def emptyline(self):

@@ -5,7 +5,7 @@ for the Airbnb clone project
 """
 from uuid import uuid4
 from datetime import datetime
-from models import storage
+import models
 
 
 class BaseModel:
@@ -25,7 +25,7 @@ class BaseModel:
                 if key == "created_at":
                     self.created_at = datetime.strptime(kwargs[key], date_f)
                 elif key == "updated_at":
-                    self.updated_at = datetime.strptime(kwargs[key, date_f])
+                    self.updated_at = datetime.strptime(kwargs[key], date_f)
                 elif key == "__class__":
                     pass
                 else:
@@ -33,8 +33,8 @@ class BaseModel:
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
-            self.update_at = datetime.now()
-            storage.new(self)
+            self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -43,8 +43,8 @@ class BaseModel:
         Returns:
             str: string representation
          """
-        return '[{}] ({}) \
-                {}'.format(type(self).__name__, self.id, self.__dict__)
+        s = '[{}] ({}) {}'
+        return s.format(type(self).__name__, self.id, self.__dict__)
 
     def to_dict(self):
         """
@@ -66,4 +66,4 @@ class BaseModel:
         with the current time.
         """
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
