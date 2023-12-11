@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """This module defines the `FileStorage` class that will be used for storage"""
 import json
 
@@ -34,23 +33,22 @@ class FileStorage:
         except FileNotFoundError:
             pass
 
-    def reload(self):
-        """Reloads a JSON string dictionary from JSON file to __objects"""
+    def classes(self):
+        """Returns a dictionary of the class name
+        (each time a class is created you need to update this)"""
+        from models.base_model import BaseModel
         classes = {
                 'BaseModel': BaseModel,
-                'User': User,
-                'Review': Review,
-                'Place': Place,
-                'Amenity': Amenity,
-                'PlaceAmenity': PlaceAmenity,
-                'State': State,
-                'City': City
                 }
+        return classes
+
+    def reload(self):
+        """Reloads a JSON string dictionary from JSON file to __objects"""
         try:
             with open(FileStorage.__file_path, 'r', encoding="UTF-8") as f:
                 from_json = json.load(f)
                 FileStorage.__objects = {
-                        key: classes[key.split('.')[0]](**val)
+                        key: self.classes()[val["__class__"]](**val)
                         for key, val in from_json.items()
                         }
         except FileNotFoundError:

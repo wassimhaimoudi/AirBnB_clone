@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """Entry point of the command interpreter for the Airbnb clone project"""
 import cmd
-import sys
+from models.base_model import BaseModel
+from models import storage
 
 
 class HBNBCCommand(cmd.Cmd):
@@ -10,7 +11,7 @@ class HBNBCCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     def do_quit(self, line):
-        """Handles the quit command"""
+        """Quits the program"""
         return True
 
     def do_EOF(self, line):
@@ -21,12 +22,17 @@ class HBNBCCommand(cmd.Cmd):
         """Handles empty line when pressing Enter"""
         pass
 
+    def do_create(self, line):
+        """Creates a new instance"""
+        if line == "" or line is None:
+            print("** class name missing **")
+        if line not in storage.classes():
+            print("** class doesn't exist **")
+
+        new = storage.classes()[line]()
+        new.save()
+        print(new.id)
+
 
 if __name__ == '__main__':
-
-    my_hbnbc = HBNBCCommand()
-    if not sys.stdin.isatty():
-        input_commands = sys.stdin.readlines()
-        my_hbnbc.onecmd('\n'.join(input_commands))
-    else:
-        my_hbnbc.cmdloop()
+    HBNBCCommand().cmdloop()

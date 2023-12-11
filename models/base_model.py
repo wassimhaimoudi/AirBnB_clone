@@ -5,7 +5,7 @@ for the Airbnb clone project
 """
 from uuid import uuid4
 from datetime import datetime
-import models
+from models import storage
 
 
 class BaseModel:
@@ -34,7 +34,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            models.storage.new(self)
+            storage.new(self)
 
     def __str__(self):
         """
@@ -66,4 +66,4 @@ class BaseModel:
         with the current time.
         """
         self.updated_at = datetime.now()
-        models.storage.save()
+        storage.save()
