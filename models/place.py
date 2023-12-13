@@ -2,7 +2,7 @@
 """
 This module contains the `Place` class
 """
-from base_model import BaseModel
+from models.base_model import BaseModel
 
 
 class Place(BaseModel):
