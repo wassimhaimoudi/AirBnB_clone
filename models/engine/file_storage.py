@@ -37,7 +37,7 @@ class FileStorage:
         """Returns a dictionary of the class name
         (each time a class is created you need to update this)"""
         from models.base_model import BaseModel
-        from moels.user import User
+        from models.user import User
 
         classes = {
                 'BaseModel': BaseModel,
