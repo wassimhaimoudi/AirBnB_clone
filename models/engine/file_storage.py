@@ -3,6 +3,7 @@
 import json
 import datetime
 
+
 class FileStorage:
     """Represents the storage system using json files"""
 
